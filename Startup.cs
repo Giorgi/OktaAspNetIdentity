@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -12,6 +13,7 @@ using OktaAspNetIdentity.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Okta.AspNetCore;
 
 namespace OktaAspNetIdentity
 {
@@ -32,6 +34,34 @@ namespace OktaAspNetIdentity
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //Okta.AspNetCore configuration
+
+            //services.AddAuthentication(options =>
+            //    {
+            //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultChallengeScheme = OktaDefaults.MvcAuthenticationScheme;
+            //    })
+            //    .AddCookie()
+            //    .AddOktaMvc(new OktaMvcOptions
+            //    {
+            //        // Replace these values with your Okta configuration
+            //        OktaDomain = "https://${yourOktaDomain}",
+            //        ClientId = "{clientId}",
+            //        ClientSecret = "{clientSecret}"
+            //    });
+
+            // AspNet.Security.OAuth.Okta configuration
+
+            //services.AddAuthentication().AddOkta(options =>
+            //{
+            //    options.CallbackPath = "/authorization-code/callback";
+            //    options.Domain = "https://${yourOktaDomain}";
+            //    options.ClientId = "{clientId}";
+            //    options.ClientSecret = "{clientSecret}";
+            //});
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
